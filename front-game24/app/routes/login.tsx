@@ -15,10 +15,6 @@ export default function Login() {
     console.log("Username, Password : ", formData.username, " : ", formData.password);
   }
 
-  const handleTest = () => {
-    console.log('test');
-    console.log('test');
-  }
 
   return (
     <section className="bg-[#F2D2F4]">
