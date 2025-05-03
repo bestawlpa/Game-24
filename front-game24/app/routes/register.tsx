@@ -9,6 +9,7 @@ export default function Register() {
     password: "password123",
   });
 
+
   return (
     <section className="bg-[#F2D2F4]">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -17,7 +18,7 @@ export default function Register() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an account
             </h1>
-            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+            <form className="space-y-4 md:space-y-6">
               <div>
                 <label
                   htmlFor="username"
