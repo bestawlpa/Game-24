@@ -1,0 +1,16 @@
+version: '3'
+services:
+  frontend:
+    build: ./front-game24
+    ports:
+      - "3087:3087"
+    volumes:
+      - ./front-game24:/app
+      - /app/node_modules
+    command: npm run dev
+
+  server:
+    build: ./server-game24
+    ports:
+      - "3088:3088"
+   
