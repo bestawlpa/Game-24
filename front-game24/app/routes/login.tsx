@@ -17,6 +17,7 @@ export default function Login() {
 
   const handleTest = () => {
     console.log('test');
+    console.log('test');
   }
 
   return (

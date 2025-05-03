@@ -12,10 +12,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
-    "eslint": "^9.26.0",
     "eslint-plugin-perfectionist": "^4.12.3",
-    "gitmoji-cli": "^9.6.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^15.5.1"
+    "gitmoji-cli": "^9.6.0"
   }
 }
