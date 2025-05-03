@@ -16,7 +16,6 @@ export default function Register() {
 
   const handleTest = () => {
     console.log('test');
-    console.log('test');
   }
 
   return (
