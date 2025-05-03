@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": ["npx eslint --fix", "git add"]
+    "**/*.{js,jsx,ts,tsx}": "npx eslint --fix"
   },
   "keywords": [],
   "author": "",
