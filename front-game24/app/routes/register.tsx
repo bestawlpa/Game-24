@@ -9,9 +9,7 @@ export default function Register() {
     password: "password123",
   });
 
-  const handleSubmit = () => {
-    console.log(formData.username, formData.password);
-  }
+
 
   return (
     <section className="bg-[#F2D2F4]">
@@ -21,7 +19,7 @@ export default function Register() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an account
             </h1>
-            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+            <form className="space-y-4 md:space-y-6">
               <div>
                 <label
                   htmlFor="username"
