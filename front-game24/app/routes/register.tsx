@@ -14,10 +14,6 @@ export default function Register() {
     alert('Username, Password : ' + formData.username + " : " + formData.password);
   }
 
-  const handleTest = () => {
-    console.log('test');
-  }
-
   return (
     <section className="bg-[#F2D2F4]">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
