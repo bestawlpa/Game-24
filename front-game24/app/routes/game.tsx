@@ -3,6 +3,7 @@ export default function Game() {
     const handle = () => {
         console.log('test01');
         console.log('test02');
+        console.log('test03');
     }
 
     return (
