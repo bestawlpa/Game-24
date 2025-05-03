@@ -1,7 +1,7 @@
 export default function Game() {
 
     const handle = () => {
-        console.log('test');
+        console.log('test01');
 
     }
 
