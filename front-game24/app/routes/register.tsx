@@ -9,7 +9,10 @@ export default function Register() {
     password: "password123",
   });
 
-
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Username, Password : ", formData.username, " : ", formData.password);
+  }
 
   return (
     <section className="bg-[#F2D2F4]">
