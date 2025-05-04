@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
+import user from './routes/userRoutes'
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.use(express.json());
 //     credentials: true,
 // }));
 
+app.use('/api', user)
 
 app.get('/', (req: Request, res: Response) => {
     res.status(200).send("My first server!");
