@@ -2,7 +2,8 @@ import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
 import user from './routes/userRoutes';
-import cors from 'cors'
+import cors from 'cors';
+import game from './routes/gameRoutes'
 
 const app = express();
 
@@ -16,7 +17,8 @@ app.use(cors({
     credentials: true,
 }));
 
-app.use('/api', user)
+app.use('/api', user);
+app.use('/api', game);
 
 app.get('/', (req: Request, res: Response) => {
     res.status(200).send("My first server!");
