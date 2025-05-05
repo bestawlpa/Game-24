@@ -3,18 +3,34 @@ import { useState } from "react";
 import type { User } from "../interfaces/user.interface";
 import { handleChange } from "~/utils/handleChange";
 
+
 export default function Register() {
   const [formData, setFormData] = useState<User>({
     username: "player1",
-    password: "password123",
+    password: "Password123",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Username, Password : ", formData.username, " : ", formData.password);
-  }
-
-
+    try {
+      const response = await fetch('http://localhost:3088/api/register', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password
+        })
+      })
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Registration failed");
+      }
+      alert('Registration successful')
+    } catch (error) {
+      const err = error as Error;
+      alert("Registration failed:" + err.message);
+    }
+  };
 
 
   return (
@@ -25,7 +41,7 @@ export default function Register() {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Create an account
             </h1>
-            <form className="space-y-4 md:space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
               <div>
                 <label
                   htmlFor="username"
