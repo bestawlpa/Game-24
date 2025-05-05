@@ -4,8 +4,10 @@ import connectDB from './config/db';
 import user from './routes/userRoutes';
 import cors from 'cors';
 import game from './routes/gameRoutes'
+import cookieParser from 'cookie-parser';
 
 const app = express();
+app.use(cookieParser());
 
 dotenv.config();
 connectDB();
