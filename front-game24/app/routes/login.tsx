@@ -1,4 +1,3 @@
-// import { Login } from "~/pages/Login";
 import { Link } from "react-router";
 import { useState } from "react";
 import type { User } from "../interfaces/user.interface";
@@ -7,13 +6,33 @@ import { handleChange } from "~/utils/handleChange";
 export default function Login() {
   const [formData, setFormData] = useState<User>({
     username: "player1",
-    password: "password123",
-  })
+    password: "Password123",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Username, Password : ", formData.username, " : ", formData.password);
-  }
+
+    try {
+      const response = await fetch("http://localhost:3088/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password
+        }),
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Registration failed");
+      }
+      alert('Login successful')
+    } catch (error) {
+      const err = error as Error;
+      alert("Login failed:" + err.message);
+    }
+  };
 
 
   return (
