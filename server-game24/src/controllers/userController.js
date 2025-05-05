@@ -140,4 +140,26 @@ const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         res.status(500).json({ message: err.message || 'Internal Server Error' });
     }
 });
-exports.default = { createUser, getUserForLogin, getAllUsers };
+const getUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: 'User not authenticated' });
+        }
+        const userId = req.user.id;
+        console.log('user', userId);
+        const user = yield userService.getUserProfile(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const result = {
+            _id: user._id,
+            username: user.username,
+        };
+        res.status(200).json(result);
+    }
+    catch (error) {
+        const err = error;
+        res.status(500).json({ message: err.message || 'Error fetch user.' });
+    }
+});
+exports.default = { createUser, getUserForLogin, getAllUsers, getUserProfile };

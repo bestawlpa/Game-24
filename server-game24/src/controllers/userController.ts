@@ -1,6 +1,6 @@
 import  * as userService from '../services/userService';
 import { Request, Response } from 'express';
-import  userModel,{ IUser }  from '../models/userModel';
+import  userModel  from '../models/userModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
@@ -114,4 +114,28 @@ const getAllUsers = async (req:Request, res:Response) => {
     }
 };
 
-export default { createUser, getUserForLogin, getAllUsers };
+const getUserProfile = async (req:Request, res:Response) => {
+    try {
+        if (!req.user) {
+            return res.status(401).json({ message: 'User not authenticated' });
+        }
+        const userId = req.user.id;
+        const user = await userService.getUserProfile(userId);
+        
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const result = {
+            _id: user._id,
+            username: user.username,
+        };
+
+        res.status(200).json(result);
+    } catch (error) {
+        const err = error as Error;  
+        res.status(500).json({ message: err.message || 'Error fetch user.' });
+    }
+};
+
+export default { createUser, getUserForLogin, getAllUsers, getUserProfile  };
