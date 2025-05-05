@@ -1,7 +1,8 @@
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db';
-import user from './routes/userRoutes'
+import user from './routes/userRoutes';
+import cors from 'cors'
 
 const app = express();
 
@@ -10,10 +11,10 @@ connectDB();
 
 app.use(express.json());
 
-// app.use(cors({
-//     origin: 'http://localhost:3000', 
-//     credentials: true,
-// }));
+app.use(cors({
+    origin: 'http://localhost:3087', 
+    credentials: true,
+}));
 
 app.use('/api', user)
 
