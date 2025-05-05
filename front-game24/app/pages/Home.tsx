@@ -1,6 +1,31 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useEffect } from "react";
 
 export function HomePage() {
+  const navigate = useNavigate();
+
+  const getUserProfile = async () => {
+    try {
+      const response = await fetch(`http://localhost:3088/api/profile`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      } else {
+        navigate("/game");
+      }
+    } catch (error) {
+      const err = error as Error;
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getUserProfile();
+  }, [])
 
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-[#F2D2F4]">
