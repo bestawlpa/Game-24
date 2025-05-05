@@ -130,4 +130,14 @@ const getUserForLogin = (req, res) => __awaiter(void 0, void 0, void 0, function
         res.status(500).json({ message: err.message || 'Error fetch user.' });
     }
 });
-exports.default = { createUser, getUserForLogin };
+const getAllUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const users = yield userService.getAllUsers();
+        res.status(200).json(users);
+    }
+    catch (error) {
+        const err = error;
+        res.status(500).json({ message: err.message || 'Internal Server Error' });
+    }
+});
+exports.default = { createUser, getUserForLogin, getAllUsers };

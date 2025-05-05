@@ -1,6 +1,6 @@
 import  * as userService from '../services/userService';
 import { Request, Response } from 'express';
-import  userModel from '../models/userModel';
+import  userModel,{ IUser }  from '../models/userModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv';
@@ -104,5 +104,14 @@ const getUserForLogin = async (req:Request ,res:Response) => {
     }
 };
 
+const getAllUsers = async (req:Request, res:Response) => {
+    try {
+        const users = await userService.getAllUsers();
+        res.status(200).json(users);
+    } catch (error) {
+        const err = error as Error;
+        res.status(500).json({ message: err.message || 'Internal Server Error' });
+    }
+};
 
-export default { createUser, getUserForLogin };
+export default { createUser, getUserForLogin, getAllUsers };

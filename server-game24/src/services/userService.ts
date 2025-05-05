@@ -21,4 +21,13 @@ const getUserForLogin = async (username: string): Promise<IUser  | null> => {
     }
 };
 
-export { createUser, getUserForLogin }
+const getAllUsers = async (): Promise<IUser[]> => {
+    try {
+        return await userModel.find()
+    } catch (error) {
+        const err = error as Error;  
+        throw new Error('Error fetching users: ' + err.message);
+    }
+};
+
+export { createUser, getUserForLogin, getAllUsers }
