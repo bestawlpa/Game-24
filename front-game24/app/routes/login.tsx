@@ -1,9 +1,10 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import type { User } from "../interfaces/user.interface";
 import { handleChange } from "~/utils/handleChange";
 
 export default function Login() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<User>({
     username: "player1",
     password: "Password123",
@@ -27,33 +28,13 @@ export default function Login() {
         const errorData = await response.json();
         throw new Error(errorData.message || "Registration failed");
       }
-      getUserProfile()
       alert('Login successful')
+      navigate("/");
     } catch (error) {
       const err = error as Error;
       alert("Login failed:" + err.message);
     }
   };
-
-  const getUserProfile = async () => {
-    try {
-      const response = await fetch(`http://localhost:3088/api/profile`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch user profile");
-      }
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      const err = error as Error;
-      alert(err.message);
-    }
-  }
-
 
   return (
     <section className="bg-[#F2D2F4]">
