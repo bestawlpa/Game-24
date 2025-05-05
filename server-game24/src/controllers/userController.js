@@ -95,7 +95,7 @@ const getUserForLogin = (req, res) => __awaiter(void 0, void 0, void 0, function
     try {
         const { username, password } = req.body;
         if (!username || !password) {
-            return res.status(400).json({ message: 'Email and password are required' });
+            return res.status(400).json({ message: 'username and password are required' });
         }
         const user = yield userService.getUserForLogin(username);
         if (!user) {
@@ -103,7 +103,7 @@ const getUserForLogin = (req, res) => __awaiter(void 0, void 0, void 0, function
         }
         const isPasswordValid = yield bcryptjs_1.default.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({ message: 'Invalid username or password' });
         }
         const token = jsonwebtoken_1.default.sign({
             id: user._id,

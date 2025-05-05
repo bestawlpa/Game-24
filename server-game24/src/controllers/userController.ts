@@ -60,7 +60,7 @@ const getUserForLogin = async (req:Request ,res:Response) => {
         const { username, password } = req.body;
 
         if (!username || !password) {
-            return res.status(400).json({ message: 'Email and password are required' });
+            return res.status(400).json({ message: 'username and password are required' });
         }
 
         const user = await userService.getUserForLogin(username);
@@ -70,7 +70,7 @@ const getUserForLogin = async (req:Request ,res:Response) => {
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid email or password' })
+            return res.status(401).json({ message: 'Invalid username or password' })
         }
 
         const token  = jwt.sign(
