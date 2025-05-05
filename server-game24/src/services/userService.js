@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = void 0;
+exports.getUserForLogin = exports.createUser = void 0;
 const userModel_1 = __importDefault(require("../models/userModel"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const createUser = (userData) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,3 +27,13 @@ const createUser = (userData) => __awaiter(void 0, void 0, void 0, function* () 
     }
 });
 exports.createUser = createUser;
+const getUserForLogin = (username) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        return yield userModel_1.default.findOne({ username });
+    }
+    catch (error) {
+        const err = error;
+        throw new Error('Error fetching userById: ' + err.message);
+    }
+});
+exports.getUserForLogin = getUserForLogin;

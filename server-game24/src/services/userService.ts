@@ -12,4 +12,13 @@ const createUser = async (userData: IUser) => {
     }
 };
 
-export { createUser }
+const getUserForLogin = async (username: string): Promise<IUser  | null> => {
+    try {
+        return await userModel.findOne({username});
+    } catch (error) {
+        const err = error as Error;  
+        throw new Error('Error fetching userById: ' + err.message);
+    }
+};
+
+export { createUser, getUserForLogin }
