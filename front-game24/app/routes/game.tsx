@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { useGetJwtUser } from "../utils/getJwtUser"
+import type { User } from '~/interfaces/user.interface';
 
 export default function Game() {
   const [numbers, setNumbers] = useState<number[]>([]);
@@ -8,7 +9,8 @@ export default function Game() {
   const [openCheat, setOpenCheat] = useState(false);
   const [cheat, setCheat] = useState<string>("");
   const isStarted = numbers.length > 0;
-  useGetJwtUser("/login", "unauthenticated");
+  const userData: User | undefined = useGetJwtUser("/login", "unauthenticated");
+
 
   const fetchNumber = async () => {
     try {
@@ -28,36 +30,40 @@ export default function Game() {
     }
   }
 
-  const handleClick = (n: Number) => {
-    console.log(n);
-  };
-
-  const handleClickSubmit = () => {
-    const inputDigits = calculate.match(/\d/g)?.map(Number) || [];
-
-    // สร้างสำเนา numbers มาเช็คทีละตัว (จะลบที่ match ไปเรื่อยๆ)
-    const numbersCopy = [...numbers];
-
-    // เช็คว่าทุกเลขใน input อยู่ใน numbers
-    const isValid = inputDigits.every((digit) => {
-      const index = numbersCopy.indexOf(digit);
-      if (index !== -1) {
-        numbersCopy.splice(index, 1); // ลบออกเพื่อกันใช้ซ้ำ
-        return true;
-      }
-      return false;
-    });
-
-    if (isValid) {
-      alert("✅ ตัวเลขในนิพจน์ถูกต้อง");
-    } else {
-      alert("ชุดตัวเลขไม่ถูกต้อง");
-    }
-  };
-
   const handleCheatSubmit = () => {
     console.log('Cheat submit:', cheat);
   };
+
+  const handleClickSubmit = async () => {
+    if (!userData) {
+      return;
+    }
+    try {
+      const response = await fetch('http://localhost:3088/api/submit-solution', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: userData._id,
+          numbers,
+          calculate
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.correct ? 'ถูกต้อง!' : 'ไม่ถูกต้อง');
+      } else {
+        console.log(data.message || 'เกิดข้อผิดพลาด');
+      }
+
+    } catch (error) {
+      const err = error as Error;
+      console.log(err);
+    }
+  };
+
 
   return (
     <div className=" w-screen h-screen flex justify-center items-center bg-[#F2D2F4]">
@@ -67,7 +73,6 @@ export default function Game() {
             {numbers.map((num, index) => (
               <div
                 key={index}
-                onClick={() => handleClick(num)}
                 className=' w-[150px] h-[150px] text-5xl font-extrabold bg-white flex justify-center items-center text-black rounded-3xl'
               >
                 {num}
