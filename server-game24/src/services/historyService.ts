@@ -11,14 +11,31 @@ const getAllHistory = async (): Promise<IHistory[]> => {
 
 const createHistory = async (userId: string, numbers: number[], calculate: string) => {
     try {
-        const history = new historyModel({userId, numbers, calculate});
-        const saved = await history.save();
-        console.log('History saved:', saved);
-        return saved;
-    } catch (error) {
-         const err = error as Error;
-        throw new Error('Error creating history: ' + err.message);
+    const existing = await historyModel.findOne({ userId });
+    console.log('ex',existing);
+    
+
+    const newRecord = { numbers, calculate };
+    console.log('ne',newRecord);
+    
+
+    if (!existing) {
+      const newHistory = new historyModel({
+        userId,
+        records: [newRecord]
+      });
+      console.log('nh',newHistory);
+      
+      return await newHistory.save();
     }
+
+    existing.records.push(newRecord);
+    return await existing.save();
+
+  } catch (error) {
+    const err = error as Error;
+    throw new Error('Error updating history: ' + err.message);
+  }
 };
 
 export { getAllHistory, createHistory }

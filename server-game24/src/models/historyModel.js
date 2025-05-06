@@ -41,13 +41,11 @@ const historySchema = new mongoose_1.Schema({
         required: true,
         unique: true
     },
-    numbers: {
-        type: [Number],
-        required: true,
-    },
-    calculate: {
-        type: String,
-        required: true,
-    }
+    records: [
+        {
+            numbers: [Number],
+            calculate: String,
+        }
+    ]
 }, { timestamps: true });
 exports.default = mongoose_1.default.model('History', historySchema);

@@ -1,11 +1,11 @@
-import { number } from 'mathjs';
 import mongoose, { Document, Schema } from 'mongoose';
-import { inherits } from 'util';
 
 interface IHistory extends Document {
     userId: string;
-    numbers: number[];
-    calculate: string;
+    records:  {
+        numbers: number[];
+        calculate: string;
+    }[];
 };
 
 const historySchema = new Schema<IHistory>({
@@ -14,14 +14,12 @@ const historySchema = new Schema<IHistory>({
         required: true,
         unique: true
     },
-    numbers: {
-        type: [Number],
-        required: true,
-    },
-    calculate: {
-        type: String,
-        required: true,
-    }
+    records: [
+        {
+            numbers: [Number],
+            calculate: String,
+        }
+    ]
 }, { timestamps: true });
 
 export default mongoose.model<IHistory>('History', historySchema);

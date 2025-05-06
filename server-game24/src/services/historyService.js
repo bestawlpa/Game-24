@@ -26,14 +26,24 @@ const getAllHistory = () => __awaiter(void 0, void 0, void 0, function* () {
 exports.getAllHistory = getAllHistory;
 const createHistory = (userId, numbers, calculate) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const history = new historyModel_1.default({ userId, numbers, calculate });
-        const saved = yield history.save();
-        console.log('History saved:', saved);
-        return saved;
+        const existing = yield historyModel_1.default.findOne({ userId });
+        console.log('ex', existing);
+        const newRecord = { numbers, calculate };
+        console.log('ne', newRecord);
+        if (!existing) {
+            const newHistory = new historyModel_1.default({
+                userId,
+                records: [newRecord]
+            });
+            console.log('nh', newHistory);
+            return yield newHistory.save();
+        }
+        existing.records.push(newRecord);
+        return yield existing.save();
     }
     catch (error) {
         const err = error;
-        throw new Error('Error creating history: ' + err.message);
+        throw new Error('Error updating history: ' + err.message);
     }
 });
 exports.createHistory = createHistory;
