@@ -80,7 +80,7 @@ export default function Game() {
               <button onClick={handleClickSubmit} className=' w-[200px] py-2 bg-green-600 rounded-md'>Submit</button>
             </>
           )}
-          <Link to={'/'} className=' fixed top-10 right-10 text-3xl font-black text-emerald-700'>History</Link>
+          <Link to={'/history'} className=' fixed top-10 right-10 text-3xl font-black text-emerald-700'>History</Link>
           <button onClick={() => setOpenCheat(!openCheat)} className=' fixed bottom-10 right-10 text-3xl font-black text-red-700'>Cheat</button>
         </div>
       </div>
