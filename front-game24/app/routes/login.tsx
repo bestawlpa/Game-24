@@ -29,7 +29,7 @@ export default function Login() {
         throw new Error(errorData.message || "Registration failed");
       }
       alert('Login successful')
-      navigate("/");
+      navigate("/game");
     } catch (error) {
       const err = error as Error;
       alert("Login failed:" + err.message);
