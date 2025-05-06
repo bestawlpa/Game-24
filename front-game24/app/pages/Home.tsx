@@ -19,7 +19,7 @@ export function HomePage() {
           </div>
         </div>
 
-        <div className=" w-full h-[90px] flex items-center justify-center ">
+        <div className=" mt-4 w-full h-[90px] flex items-center justify-center ">
           <Link to={"/login"} className=" mr-1">
             <div className=" px-8 py-2 flex justify-center font-extrabold items-center rounded-4xl bg-[#393E46]">
               Login
@@ -28,6 +28,14 @@ export function HomePage() {
           <Link to={"/register"} className=" ml-1">
             <div className=" px-8 py-2 flex justify-center font-extrabold items-center rounded-4xl text-[#393E46] bg-[#F5F5F5]">
               Register
+            </div>
+          </Link>
+        </div>
+
+        <div className=" mt-8 w-full h-[90px] flex items-center justify-center ">
+          <Link to={"/game"}>
+            <div>
+              <img src="/home/play-svgrepo-com (1).svg" alt="" className=" w-10 h-10" />
             </div>
           </Link>
         </div>
