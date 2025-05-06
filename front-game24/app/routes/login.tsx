@@ -92,9 +92,9 @@ export default function Login() {
                 Don’t have an account yet?{" "}
                 <Link
                   to={"/register"}
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className=" text-red-700 font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
-                  Sign up
+                  Register Here
                 </Link>
               </p>
             </form>

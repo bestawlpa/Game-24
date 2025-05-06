@@ -87,9 +87,9 @@ export default function Register() {
                 Already have an account?{" "}
                 <Link
                   to={"/login"}
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className=" text-red-700 font-medium text-primary-600 hover:underline dark:text-primary-500"
                 >
-                  Login here
+                  Login Here
                 </Link>
               </p>
             </form>
