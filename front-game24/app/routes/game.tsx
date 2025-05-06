@@ -11,7 +11,6 @@ export default function Game() {
   const isStarted = numbers.length > 0;
   const userData: User | undefined = useGetJwtUser("/login", "unauthenticated");
 
-
   const fetchNumber = async () => {
     try {
       const response = await fetch('http://localhost:3088/api/generate-numbers');
@@ -20,10 +19,9 @@ export default function Game() {
         throw new Error(errorData.message);
       }
       const data = await response.json();
+      const splitData = data.number.toString().split('').map(Number);
 
-      const spt = data.number.toString().split('').map(Number);
-      console.log('data', spt);
-      setNumbers(spt);
+      setNumbers(splitData);
     } catch (error) {
       const err = error as Error;
       console.log(err);
@@ -47,13 +45,17 @@ export default function Game() {
         body: JSON.stringify({
           userId: userData._id,
           numbers,
-          calculate
+          calculate,
         }),
       });
 
       const data = await response.json();
       if (response.ok) {
         alert(data.correct ? 'ถูกต้อง!' : 'ไม่ถูกต้อง');
+        if (data.correct) {
+          fetchNumber();
+          setCalculate("");
+        }
       } else {
         console.log(data.message || 'เกิดข้อผิดพลาด');
       }
@@ -90,6 +92,7 @@ export default function Game() {
               <input
                 type="text"
                 className="w-[200px] h-[40px] bg-blue-400 rounded-md text-center "
+                placeholder='1513'
                 value={cheat}
                 onChange={(e) => setCheat(e.target.value)}
               />
@@ -101,6 +104,7 @@ export default function Game() {
             <>
               <input type="text"
                 className=' w-[200px] h-[40px] bg-blue-400 rounded-md text-center'
+                placeholder='(1+5)*(1+3)'
                 value={calculate}
                 onChange={(e) => setCalculate(e.target.value)} />
               <button onClick={handleClickSubmit} className=' w-[200px] py-2 bg-green-600 rounded-md'>Submit</button>
