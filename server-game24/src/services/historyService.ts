@@ -38,4 +38,18 @@ const createHistory = async (userId: string, numbers: number[], calculate: strin
   }
 };
 
-export { getAllHistory, createHistory }
+const getHistoryUser = async (userId:string) => {
+    try {
+        let history = await historyModel.findOne({ userId });
+
+        if (!history) {
+            console.log('ไม่มีตระกร้า');
+        }
+        return history;
+    } catch (error) {
+        const err = error as Error;
+        throw new Error('Error updating history: ' + err.message);
+    }
+};
+
+export { getAllHistory, createHistory, getHistoryUser }

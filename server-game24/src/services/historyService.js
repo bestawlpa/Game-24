@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createHistory = exports.getAllHistory = void 0;
+exports.getHistoryUser = exports.createHistory = exports.getAllHistory = void 0;
 const historyModel_1 = __importDefault(require("../models/historyModel"));
 const getAllHistory = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -47,3 +47,17 @@ const createHistory = (userId, numbers, calculate) => __awaiter(void 0, void 0, 
     }
 });
 exports.createHistory = createHistory;
+const getHistoryUser = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let history = yield historyModel_1.default.findOne({ userId });
+        if (!history) {
+            console.log('ไม่มีตระกร้า');
+        }
+        return history;
+    }
+    catch (error) {
+        const err = error;
+        throw new Error('Error updating history: ' + err.message);
+    }
+});
+exports.getHistoryUser = getHistoryUser;

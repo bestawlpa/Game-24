@@ -64,4 +64,19 @@ const createHistory = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(500).json({ message: err.message || 'Error creating history.' });
     }
 });
-exports.default = { getAllHistory, createHistory };
+const getHistoryUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.user.id;
+    console.log('Received userId:', userId);
+    try {
+        const cart = yield historyService.getHistoryUser(userId);
+        if (!cart) {
+            return res.status(404).json({ message: 'ยังไม่มีตะกร้า' });
+        }
+        res.status(200).json(cart);
+    }
+    catch (error) {
+        const err = error;
+        res.status(500).json({ message: err.message || 'Error getHistoryUser.' });
+    }
+});
+exports.default = { getAllHistory, createHistory, getHistoryUser };

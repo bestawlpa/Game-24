@@ -23,4 +23,21 @@ const createHistory = async (req: Request, res: Response) => {
     }
 }
 
-export default { getAllHistory, createHistory }
+const getHistoryUser = async (req: Request, res: Response) => {
+   
+    const userId = req.user.id;
+    console.log('Received userId:', userId);
+
+    try {
+        const cart = await historyService.getHistoryUser(userId);
+        if (!cart) {
+            return res.status(404).json({ message: 'ยังไม่มีตะกร้า' });
+        }
+        res.status(200).json(cart);
+    } catch (error) {
+        const err = error as Error;  
+        res.status(500).json({ message: err.message || 'Error getHistoryUser.' });
+    }
+};
+
+export default { getAllHistory, createHistory, getHistoryUser }
