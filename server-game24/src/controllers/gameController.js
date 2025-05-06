@@ -43,6 +43,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const gameService = __importStar(require("../services/gameService"));
+const historyService = __importStar(require("../services/historyService"));
 const generateRandomNumber = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const number = gameService.generateRandomNumber();
@@ -53,15 +54,18 @@ const generateRandomNumber = (req, res) => __awaiter(void 0, void 0, void 0, fun
         res.status(500).json({ message: err.message || 'Internal Server Error' });
     }
 });
-const checkAnswer = (req, res) => {
+const checkAnswer = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { numbers, calculate, userId } = req.body;
     console.log(userId, calculate, numbers);
     try {
         const isCorrect = gameService.checkAnswer(userId, numbers, calculate);
+        if (isCorrect && userId) {
+            yield historyService.createHistory(userId, numbers, calculate);
+        }
         res.status(200).json({ correct: isCorrect });
     }
     catch (error) {
         res.status(400).json({ message: 'Invalid expression' });
     }
-};
+});
 exports.default = { generateRandomNumber, checkAnswer };

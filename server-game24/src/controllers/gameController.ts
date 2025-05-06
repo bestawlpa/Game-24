@@ -1,5 +1,6 @@
 import * as gameService from '../services/gameService';
 import { Request, Response } from 'express';
+import * as historyService from '../services/historyService';
 
 const generateRandomNumber = async (req: Request, res: Response) => {
     try {
@@ -11,12 +12,17 @@ const generateRandomNumber = async (req: Request, res: Response) => {
     }
 };
 
-const checkAnswer = (req: Request, res: Response) => {
+const checkAnswer = async (req: Request, res: Response) => {
   const { numbers, calculate, userId } = req.body;
   console.log(userId, calculate, numbers);
   
   try {
     const isCorrect = gameService.checkAnswer(userId, numbers, calculate);
+
+    if (isCorrect && userId) {
+      await historyService.createHistory(userId, numbers, calculate);
+    }
+
     res.status(200).json({ correct: isCorrect });
   } catch (error) {
     res.status(400).json({ message: 'Invalid expression' });
