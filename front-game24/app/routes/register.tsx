@@ -1,4 +1,4 @@
-import { Link } from "react-router"
+import { Link, useNavigate } from "react-router"
 import { useState } from "react";
 import type { User } from "../interfaces/user.interface";
 import { handleChange } from "~/utils/handleChange";
@@ -9,6 +9,7 @@ export default function Register() {
     username: "player1",
     password: "Password123",
   });
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +27,7 @@ export default function Register() {
         throw new Error(errorData.message || "Registration failed");
       }
       alert('Registration successful')
+      navigate('/login')
     } catch (error) {
       const err = error as Error;
       alert("Registration failed:" + err.message);
