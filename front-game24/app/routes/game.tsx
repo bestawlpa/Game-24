@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router';
+import { useGetJwtUser } from "../utils/getJwtUser"
 
 export default function Game() {
   const [numbers, setNumbers] = useState<number[]>([]);
@@ -7,6 +8,7 @@ export default function Game() {
   const [openCheat, setOpenCheat] = useState(false);
   const [cheat, setCheat] = useState<string>("");
   const isStarted = numbers.length > 0;
+  useGetJwtUser("/login", "unauthenticated");
 
   const fetchNumber = async () => {
     try {
@@ -31,7 +33,26 @@ export default function Game() {
   };
 
   const handleClickSubmit = () => {
-    console.log(calculate);
+    const inputDigits = calculate.match(/\d/g)?.map(Number) || [];
+
+    // สร้างสำเนา numbers มาเช็คทีละตัว (จะลบที่ match ไปเรื่อยๆ)
+    const numbersCopy = [...numbers];
+
+    // เช็คว่าทุกเลขใน input อยู่ใน numbers
+    const isValid = inputDigits.every((digit) => {
+      const index = numbersCopy.indexOf(digit);
+      if (index !== -1) {
+        numbersCopy.splice(index, 1); // ลบออกเพื่อกันใช้ซ้ำ
+        return true;
+      }
+      return false;
+    });
+
+    if (isValid) {
+      alert("✅ ตัวเลขในนิพจน์ถูกต้อง");
+    } else {
+      alert("ชุดตัวเลขไม่ถูกต้อง");
+    }
   };
 
   const handleCheatSubmit = () => {
