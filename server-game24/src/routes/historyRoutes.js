@@ -7,4 +7,5 @@ const express_1 = __importDefault(require("express"));
 const historyController_1 = __importDefault(require("../controllers/historyController"));
 const router = express_1.default.Router();
 router.get('/historys', historyController_1.default.getAllHistory);
+router.post('/add-History', historyController_1.default.createHistory);
 exports.default = router;

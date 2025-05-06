@@ -53,4 +53,15 @@ const getAllHistory = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(500).json({ message: err.message || 'Internal Server Error' });
     }
 });
-exports.default = { getAllHistory };
+const createHistory = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId, numbers, calculate } = req.body;
+        const history = yield historyService.createHistory(userId, numbers, calculate);
+        res.status(201).json({ message: 'History created successfully', history });
+    }
+    catch (error) {
+        const err = error;
+        res.status(500).json({ message: err.message || 'Error creating history.' });
+    }
+});
+exports.default = { getAllHistory, createHistory };
