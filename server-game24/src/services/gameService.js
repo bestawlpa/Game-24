@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateRandomNumber = void 0;
+exports.checkAnswer = exports.generateRandomNumber = void 0;
+const mathjs_1 = require("mathjs");
 const generateRandomNumber = () => {
     try {
         const digits = [];
@@ -16,3 +17,13 @@ const generateRandomNumber = () => {
     }
 };
 exports.generateRandomNumber = generateRandomNumber;
+const checkAnswer = (userId, numbers, calculate) => {
+    try {
+        const result = (0, mathjs_1.evaluate)(calculate);
+        return result === 24;
+    }
+    catch (e) {
+        throw new Error('Invalid calculate');
+    }
+};
+exports.checkAnswer = checkAnswer;

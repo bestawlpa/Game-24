@@ -9,6 +9,18 @@ const generateRandomNumber = async (req: Request, res: Response) => {
         const err = error as Error;
         res.status(500).json({ message: err.message || 'Internal Server Error' });
     }
-}
+};
 
-export default { generateRandomNumber }
+const checkAnswer = (req: Request, res: Response) => {
+  const { numbers, calculate, userId } = req.body;
+  console.log(userId, calculate, numbers);
+  
+  try {
+    const isCorrect = gameService.checkAnswer(userId, numbers, calculate);
+    res.json({ correct: isCorrect });
+  } catch (error) {
+    res.status(400).json({ message: 'Invalid expression' });
+  }
+};
+
+export default { generateRandomNumber, checkAnswer }

@@ -1,3 +1,5 @@
+import { evaluate } from 'mathjs';
+
 const generateRandomNumber = ():Number => {
     try {
         const digits: number[] = [];
@@ -12,4 +14,14 @@ const generateRandomNumber = ():Number => {
     }
 };
 
-export { generateRandomNumber }
+
+const checkAnswer = (userId: string, numbers: number[], calculate: string): boolean => {
+  try {
+    const result = evaluate(calculate);
+    return result === 24;
+  } catch (e) {
+    throw new Error('Invalid calculate');
+  }
+};
+
+export { generateRandomNumber, checkAnswer  }

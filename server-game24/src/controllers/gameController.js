@@ -53,4 +53,15 @@ const generateRandomNumber = (req, res) => __awaiter(void 0, void 0, void 0, fun
         res.status(500).json({ message: err.message || 'Internal Server Error' });
     }
 });
-exports.default = { generateRandomNumber };
+const checkAnswer = (req, res) => {
+    const { numbers, calculate, userId } = req.body;
+    console.log(userId, calculate, numbers);
+    try {
+        const isCorrect = gameService.checkAnswer(userId, numbers, calculate);
+        res.json({ correct: isCorrect });
+    }
+    catch (error) {
+        res.status(400).json({ message: 'Invalid expression' });
+    }
+};
+exports.default = { generateRandomNumber, checkAnswer };
