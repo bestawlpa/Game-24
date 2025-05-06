@@ -5,6 +5,7 @@ import user from './routes/userRoutes';
 import cors from 'cors';
 import game from './routes/gameRoutes'
 import cookieParser from 'cookie-parser';
+import history from './routes/historyRoutes'
 
 const app = express();
 app.use(cookieParser());
@@ -21,6 +22,7 @@ app.use(cors({
 
 app.use('/api', user);
 app.use('/api', game);
+app.use('/api', history);
 
 app.get('/', (req: Request, res: Response) => {
     res.status(200).send("My first server!");

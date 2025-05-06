@@ -10,6 +10,7 @@ const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const cors_1 = __importDefault(require("cors"));
 const gameRoutes_1 = __importDefault(require("./routes/gameRoutes"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const historyRoutes_1 = __importDefault(require("./routes/historyRoutes"));
 const app = (0, express_1.default)();
 app.use((0, cookie_parser_1.default)());
 dotenv_1.default.config();
@@ -21,6 +22,7 @@ app.use((0, cors_1.default)({
 }));
 app.use('/api', userRoutes_1.default);
 app.use('/api', gameRoutes_1.default);
+app.use('/api', historyRoutes_1.default);
 app.get('/', (req, res) => {
     res.status(200).send("My first server!");
 });
