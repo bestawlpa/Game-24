@@ -1,10 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import type { User } from "~/interfaces/user.interface";
 
 type RedirectCondition = "authenticated" | "unauthenticated";
 
 export const useGetJwtUser = ( redirectPath: string, redirectIf: RedirectCondition ) => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState<User>();
 
   const getUserProfile = async () => {
     try {
@@ -24,6 +26,11 @@ export const useGetJwtUser = ( redirectPath: string, redirectIf: RedirectConditi
         navigate(redirectPath);
       }
 
+      if (isAuthenticated) {
+        const data = await response.json(); 
+        setUserData(data); 
+      }
+
     } catch (error) {
       const err = error as Error;
       console.log(err.message);
@@ -33,4 +40,6 @@ export const useGetJwtUser = ( redirectPath: string, redirectIf: RedirectConditi
   useEffect(() => {
     getUserProfile();
   }, [redirectPath, redirectIf, navigate]);
+
+  return userData;
 };
