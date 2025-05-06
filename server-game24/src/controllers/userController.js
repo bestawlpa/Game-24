@@ -146,7 +146,6 @@ const getUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function*
             return res.status(401).json({ message: 'User not authenticated' });
         }
         const userId = req.user.id;
-        console.log('user', userId);
         const user = yield userService.getUserProfile(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
