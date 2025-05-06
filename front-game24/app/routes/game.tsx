@@ -32,10 +32,35 @@ export default function Game() {
     console.log('Cheat submit:', cheat);
   };
 
+  const extractNumbersFromString = (str: string): number[] => {
+    return str.match(/\d+/g)?.map(Number) || [];
+  };
+
   const handleClickSubmit = async () => {
     if (!userData) {
       return;
     }
+
+    if (numbers.length == 0) {
+      alert('start ก่อนไหม ??');
+      return;
+    };
+
+    if (!calculate.trim()) {
+      alert('ไหนคำตอบ?');
+      return;
+    };
+
+    const calcNumbers = extractNumbersFromString(calculate).sort((a, b) => a - b);
+    const inputNumbers = [...numbers].sort((a, b) => a - b);
+
+    const isSame = calcNumbers.toString() === inputNumbers.toString();
+
+    if (!isSame) {
+      alert('เลขในคำตอบไม่ตรงกับเลขที่ให้มา');
+      return;
+    };
+
     try {
       const response = await fetch('http://localhost:3088/api/submit-solution', {
         method: 'POST',
@@ -55,10 +80,10 @@ export default function Game() {
         if (data.correct) {
           fetchNumber();
           setCalculate("");
-        }
+        };
       } else {
         console.log(data.message || 'เกิดข้อผิดพลาด');
-      }
+      };
 
     } catch (error) {
       const err = error as Error;
