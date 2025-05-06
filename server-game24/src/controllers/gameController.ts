@@ -17,7 +17,7 @@ const checkAnswer = (req: Request, res: Response) => {
   
   try {
     const isCorrect = gameService.checkAnswer(userId, numbers, calculate);
-    res.json({ correct: isCorrect });
+    res.status(200).json({ correct: isCorrect });
   } catch (error) {
     res.status(400).json({ message: 'Invalid expression' });
   }
