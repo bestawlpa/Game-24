@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { Link } from 'react-router';
 import { useGetJwtUser } from "../utils/getJwtUser"
 import type { User } from '~/interfaces/user.interface';
@@ -11,7 +11,7 @@ export default function Game() {
   const isStarted = numbers.length > 0;
   const userData: User | undefined = useGetJwtUser("/login", "unauthenticated");
 
-  const fetchNumber = async () => {
+  const fetchNumber = useCallback(async () => {
     try {
       const response = await fetch('http://localhost:3088/api/generate-numbers');
       if (!response.ok) {
@@ -26,7 +26,7 @@ export default function Game() {
       const err = error as Error;
       console.log(err);
     }
-  }
+  }, [])
 
   const handleCheatSubmit = () => {
     console.log('Cheat submit:', cheat);
@@ -36,7 +36,7 @@ export default function Game() {
     return str.match(/\d+/g)?.map(Number) || [];
   };
 
-  const handleClickSubmit = async () => {
+  const handleClickSubmit = useCallback(async () => {
     if (!userData) {
       return;
     }
@@ -89,7 +89,7 @@ export default function Game() {
       const err = error as Error;
       console.log(err);
     }
-  };
+  }, [userData, numbers, calculate, fetchNumber]);
 
 
   return (
