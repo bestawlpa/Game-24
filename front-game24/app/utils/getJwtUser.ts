@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router";
 import type { User } from "~/interfaces/user.interface";
 
@@ -8,7 +8,7 @@ export const useGetJwtUser = ( redirectPath: string, redirectIf: RedirectConditi
   const navigate = useNavigate();
   const [userData, setUserData] = useState<User>();
 
-  const getUserProfile = async () => {
+  const getUserProfile = useCallback(async () => {
     try {
       const response = await fetch(`http://localhost:3088/api/profile`, {
         method: "GET",
@@ -35,7 +35,7 @@ export const useGetJwtUser = ( redirectPath: string, redirectIf: RedirectConditi
       const err = error as Error;
       console.log(err.message);
     }
-  };
+  },[ redirectIf, redirectPath, navigate ]);
 
   useEffect(() => {
     getUserProfile();
