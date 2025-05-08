@@ -1,2 +1,4 @@
 /server-game24/.env
 /.vscode
+node_modules/
+server-game24/node_modules/
