@@ -68,11 +68,11 @@ const getHistoryUser = (req, res) => __awaiter(void 0, void 0, void 0, function*
     const userId = req.user.id;
     console.log('Received userId:', userId);
     try {
-        const cart = yield historyService.getHistoryUser(userId);
-        if (!cart) {
-            return res.status(404).json({ message: 'ยังไม่มีตะกร้า' });
+        const history = yield historyService.getHistoryUser(userId);
+        if (!history) {
+            return res.status(404).json({ message: 'no record' });
         }
-        res.status(200).json(cart);
+        res.status(200).json(history);
     }
     catch (error) {
         const err = error;

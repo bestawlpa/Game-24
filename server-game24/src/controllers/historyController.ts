@@ -29,11 +29,11 @@ const getHistoryUser = async (req: Request, res: Response) => {
     console.log('Received userId:', userId);
 
     try {
-        const cart = await historyService.getHistoryUser(userId);
-        if (!cart) {
-            return res.status(404).json({ message: 'ยังไม่มีตะกร้า' });
+        const history = await historyService.getHistoryUser(userId);
+        if (!history) {
+            return res.status(404).json({ message: 'no record' });
         }
-        res.status(200).json(cart);
+        res.status(200).json(history);
     } catch (error) {
         const err = error as Error;  
         res.status(500).json({ message: err.message || 'Error getHistoryUser.' });
