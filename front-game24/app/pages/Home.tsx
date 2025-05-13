@@ -4,9 +4,9 @@ import { useGetJwtUser } from "../utils/getJwtUser";
 export function HomePage() {
   useGetJwtUser("/game", "authenticated");
 
-  const test = 12;
+  const text: string = "best";
 
-  console.log(test);
+  console.log(text);
 
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-[#F2D2F4]">
