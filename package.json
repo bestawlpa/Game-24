@@ -6,7 +6,8 @@
   "scripts": {
     "prepare": "husky",
     "lint": "eslint .",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "commit": "cz"
   },
   "lint-staged": {
     "**/*.{js,ts,jsx,tsx}": [
@@ -22,6 +23,8 @@
     "@eslint/js": "^9.26.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
+    "commitizen": "^4.3.1",
+    "cz-customizable": "^7.4.0",
     "eslint": "^9.26.0",
     "eslint-plugin-perfectionist": "^4.12.3",
     "eslint-plugin-react": "^7.37.5",
@@ -33,5 +36,13 @@
     "prettier": "^3.5.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.31.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./cz.config.cjs"
+    }
   }
 }
